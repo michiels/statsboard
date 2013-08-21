@@ -12,9 +12,11 @@ class MetricsDefinition
 
     def metric(name)
 
-      m = Metric.new
+      m = Metric.where(name: name).first_or_initialize
 
       yield(m)
+
+      m.save
 
       MetricsDefinition.definition.metrics << m
 
@@ -30,19 +32,6 @@ class MetricsDefinition
     @metrics.each do |m|
       m.fetch
     end
-  end
-
-end
-
-class Metric
-  attr_accessor :reason
-
-  def fetch_with(block)
-    @block = block
-  end
-
-  def fetch
-    puts @block.call
   end
 
 end
