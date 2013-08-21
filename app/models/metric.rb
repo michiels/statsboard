@@ -8,11 +8,13 @@ class Metric < ActiveRecord::Base
   def fetch
     daily_metric = daily_metrics.where(date: Date.today).first_or_initialize
 
+    puts "fetching #{name}"
+
     value = @block.call
 
     daily_metric.value = value
 
-    daily_metric.save
+    daily_metric.save!
   end
 
 end
