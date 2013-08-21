@@ -1,6 +1,9 @@
 require 'bundler/capistrano'
 require 'intercity/capistrano'
 
+set :whenever_command, "bundle exec whenever"
+require 'whenever/capistrano'
+
 set :application, "statsboard_production"
 set :repository,  "git@github.com:michiels/statsboard.git"
 
