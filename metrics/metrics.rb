@@ -28,6 +28,16 @@ class DashboardMetrics < MetricsDefinition
     })
   end
 
+  metric "intercity all versions gem downloads" do |m|
+    m.reason = "Intercity gem downloads indicate usage for deployment"
+
+    m.fetch_with(lambda {
+      url = open('http://www.rubygems.org/api/v1/downloads/intercity-0.0.1.json')
+      json = url.read
+      JSON.parse(json)['total_downloads']
+    })
+  end
+
   metric "intercity-gitlab stargazers" do |m|
     m.reason = "Bookmarks of intercity-gitlab indicates for installing GitLab on own server."
 
