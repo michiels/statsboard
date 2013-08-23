@@ -7,7 +7,7 @@
       <tr>
         <th></th>
         <% @dates.each do |date| %>
-          <% if date.date.day == 21 %>
+          <% if date.date.day == 1 %>
             <th><%= l(date.date, format: '%b') %></th>
           <% end %>
           <th><%= l(date.date, format: '%d') %></th>
@@ -20,7 +20,7 @@
           <a title="<%= metric.reason %>"><%= metric.name %></a>
         </th>
         <% @dates.each do |date| %>
-          <% if date.date.day == 21 %>
+          <% if date.date.day == 1 %>
             <td style="width: 40px"></td>
           <% end %>
           <td style="width: 40px; text-align: right">
