@@ -1,1 +1,3 @@
-$('#events tbody tr#event_<%= @event.id %>').remove()
+$('#events tbody tr#event_<%= @event.id %>').hide('fast', function() {
+  $(this).remove()
+})
