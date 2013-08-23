@@ -2,6 +2,29 @@ require 'open-uri'
 
 class DashboardMetrics < MetricsDefinition
 
+  metric "unique visitor frontpage loads on intercityup.com" do |m|
+    m.reason = "Unique visitors to our homepage indicate an interest for our activities."
+
+    m.fetch_with(lambda {
+      config = MIXPANEL_CONFIG
+      client = Mixpanel::Client.new(config)
+
+      data = client.request('events/properties', {
+        'event' => 'Loaded a Page',
+        'name' => 'url',
+        'values' => ['http://www.intercityup.com/'],
+        'type' => 'unique',
+        'unit' => 'day',
+        'interval' => '1'
+      })
+
+      Metric.logger.info data.inspect
+
+      data['data']['values'].first[1].values.first
+
+    })
+  end
+
   metric "locomotive-chef-repo stargazers" do |m|
     m.reason = "Bookmarks of locomotive-chef-repo indicates interest for do-it-yourself Rails server installation"
 

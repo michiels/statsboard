@@ -10,6 +10,13 @@ set :repository,  "git@github.com:michiels/statsboard.git"
 server "intercityup.com", :web, :app, :db, primary: true
 
 after "deploy:finalize_update", "deploy:link_secret_token"
+after "deploy:finialize_update", "mixpanel:link"
+
+namespace :mixpanel do
+  task :link do
+    run "rm -f #{release_path}/config/initializers/mixpanel.rb && ln -nfs #{shared_path}/config/mixpanel.rb #{release_path}/config/initializers/mixpanel.rb"
+  end
+end
 
 namespace :deploy do
   task :link_secret_token do

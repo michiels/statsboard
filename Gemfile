@@ -50,4 +50,6 @@ gem 'intercity', require: false, group: :development
 
 gem 'octokit'
 
+gem 'mixpanel_client'
+
 gem 'whenever', require: false
