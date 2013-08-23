@@ -11,12 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130821201955) do
+ActiveRecord::Schema.define(version: 20130823140912) do
 
   create_table "daily_metrics", force: true do |t|
     t.integer  "value"
     t.integer  "metric_id"
     t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events", force: true do |t|
+    t.text     "description"
+    t.date     "happened_on"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

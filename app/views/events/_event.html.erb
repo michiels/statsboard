@@ -1,0 +1,9 @@
+  <%= content_tag_for :tr, event do %>
+    <th><%= l(event.happened_on, format: :short) %></th>
+    <td><%= event.description %></td>
+    <td style="width: 10px">
+      <%= link_to event_path(event), remote: true, method: :delete, format: :js do %>
+        <span class="glyphicon glyphicon-trash"></span>
+      <% end %>
+    </td>
+  <% end %>

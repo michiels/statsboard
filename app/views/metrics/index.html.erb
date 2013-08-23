@@ -1,26 +1,58 @@
-<h1>Metrics</h1>
+<section class="metrics">
 
-<table class="table table-striped table-bordered table-condensed table-responsive">
-  <thead>
-    <tr>
-      <th></th>
-      <% @dates.each do |date| %>
-        <th><%= l(date.date, format: :short) %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <% @metrics.each do |metric| %>
-    <tr>
-      <th style="width: 200px">
-        <a title="<%= metric.reason %>"><%= metric.name %></a>
-      </th>
-      <% @dates.each do |date| %>
-        <td>
-          <%= metric.daily_metrics.all.find { |d| d.date == date.date }.try(:value) %>
-        </td>
-      <% end %>
-    </tr>
+  <h1>Metrics</h1>
+
+  <table class="table table-striped table-bordered table-condensed table-responsive">
+    <thead>
+      <tr>
+        <th></th>
+        <% @dates.each do |date| %>
+          <% if date.date.day == 21 %>
+            <th><%= l(date.date, format: '%b') %></th>
+          <% end %>
+          <th><%= l(date.date, format: '%d') %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <% @metrics.each do |metric| %>
+      <tr>
+        <th>
+          <a title="<%= metric.reason %>"><%= metric.name %></a>
+        </th>
+        <% @dates.each do |date| %>
+          <% if date.date.day == 21 %>
+            <td style="width: 40px"></td>
+          <% end %>
+          <td style="width: 40px; text-align: right">
+            <%= metric.daily_metrics.load.find { |d| d.date == date.date }.try(:value) %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+</section>
+
+<section class="events">
+  <h1>Write history</h1>
+
+  <%= form_for @event, format: :js, remote: true, html: { role: 'form', class: 'form-inline', style: 'border-bottom: 1px solid #eee; padding-bottom: 10px;' } do |f| %>
+    <div class="form-group" style="width: 100px">
+      <%= f.label :happened_on %>
+      <%= f.date_field :happened_on, class: 'form-control', placeholder: 'yyyy-mm-dd', style: 'width: 100px' %>
+    </div>
+    <div class="form-group" style="width: 500px">
+      <%= f.label :description %>
+      <%= f.text_field :description, class: 'form-control', placeholder: 'What happened?', style: 'width: 500px' %>
+    </div>
+    <button type="submit" class="btn btn-default" style="vertical-align: bottom">Save</button>
   <% end %>
-</table>
+
+  <table id="events" class="table table-striped table-responsive">
+    <% @events.each do |event| %>
+      <%= render event %>
+    <% end %>
+  </table>
+</section>
 
 <script type="text/javascript">$(document).ready(function() { $('th a').tooltip({placement: 'bottom'}) })</script>
