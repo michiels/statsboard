@@ -10,7 +10,7 @@ set :repository,  "git@github.com:michiels/statsboard.git"
 server "intercityup.com", :web, :app, :db, primary: true
 
 after "deploy:finalize_update", "deploy:link_secret_token"
-after "deploy:finialize_update", "mixpanel:link"
+after "deploy:finalize_update", "mixpanel:link"
 
 namespace :mixpanel do
   task :link do
